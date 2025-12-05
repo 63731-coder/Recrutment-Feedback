@@ -4,6 +4,7 @@ from odoo import models, fields
 class HrFeedbackQuestion(models.Model):
     _name = 'hr.feedback.question'
     _description = 'Question du Feedback'
+    _rec_name = 'label'
 
     # Texte de la question
     label = fields.Char(string='Question', required=True)

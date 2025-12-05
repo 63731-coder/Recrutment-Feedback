@@ -1,30 +1,163 @@
 <odoo>
     <data>
-<!--
-          <record id="object0" model="hr_feedback.hr_feedback">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
+        <record id="user_demo_1" model="res.users">
+            <field name="name">Alice Recruteur</field>
+            <field name="login">alice</field>
+            <field name="password">alice</field>
+        </record>
 
-          <record id="object1" model="hr_feedback.hr_feedback">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
+        <record id="user_demo_2" model="res.users">
+            <field name="name">Bob Manager</field>
+            <field name="login">bob</field>
+            <field name="password">bob</field>
+        </record>
 
-          <record id="object2" model="hr_feedback.hr_feedback">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+        <record id="user_demo_3" model="res.users">
+            <field name="name">Charlie RH</field>
+            <field name="login">charlie</field>
+            <field name="password">charlie</field>
+        </record>
 
-          <record id="object3" model="hr_feedback.hr_feedback">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
+        <record id="skill_type_dev" model="hr.skill.type">
+            <field name="name">Développement</field>
+        </record>
 
-          <record id="object4" model="hr_feedback.hr_feedback">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
+        <record id="skill_python" model="hr.skill">
+            <field name="name">Python</field>
+            <field name="skill_type_id" ref="skill_type_dev" />
+        </record>
+
+        <record id="skill_java" model="hr.skill">
+            <field name="name">Java</field>
+            <field name="skill_type_id" ref="skill_type_dev" />
+        </record>
+
+        <record id="skill_js" model="hr.skill">
+            <field name="name">JavaScript</field>
+            <field name="skill_type_id" ref="skill_type_dev" />
+        </record>
+
+        <record id="skill_cpp" model="hr.skill">
+            <field name="name">C++</field>
+            <field name="skill_type_id" ref="skill_type_dev" />
+        </record>
+
+        <record id="skill_ruby" model="hr.skill">
+            <field name="name">Ruby</field>
+            <field name="skill_type_id" ref="skill_type_dev" />
+        </record>
+
+        <record id="job_dev_python" model="hr.job">
+            <field name="name">Développeur Python Senior</field>
+        </record>
+        
+        <record id="job_consultant" model="hr.job">
+            <field name="name">Consultant Fonctionnel</field>
+        </record>
+
+        <record id="candidate_john" model="hr.candidate">
+            <field name="partner_name">John Doe</field>
+        </record>
+
+        <record id="candidate_jane" model="hr.candidate">
+            <field name="partner_name">Jane Smith</field>
+        </record>
+
+        <record id="candidate_bob" model="hr.candidate">
+            <field name="partner_name">Bob Builder</field>
+        </record>
+
+        <record id="app_john" model="hr.applicant">
+            <field name="candidate_id" ref="candidate_john"/>
+            <field name="job_id" ref="job_dev_python"/>
+        </record>
+
+        <record id="app_jane" model="hr.applicant">
+            <field name="candidate_id" ref="candidate_jane"/>
+            <field name="job_id" ref="job_consultant"/>
+        </record>
+
+        <record id="app_bob" model="hr.applicant">
+            <field name="candidate_id" ref="candidate_bob"/>
+            <field name="job_id" ref="job_dev_python"/>
+        </record>
+
+        <record id="feedback_1" model="hr.feedback">
+            <field name="author_id" ref="user_demo_1"/>
+            <field name="application_id" ref="app_john"/>
+            <field name="description">Entretien technique très concluant.</field>
+            <field name="state">draft</field>
+        </record>
+            <record id="q1_f1" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_1"/>
+                <field name="skill_id" ref="skill_python"/>
+                <field name="label">Maitrise des décorateurs</field>
+                <field name="answer">Il a su expliquer @api.depends parfaitement.</field>
+                <field name="score">9.5</field>
+            </record>
+            <record id="q2_f1" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_1"/>
+                <field name="skill_id" ref="skill_java"/>
+                <field name="label">Connaissance de Spring</field>
+                <field name="answer">Connaissances basiques.</field>
+                <field name="score">6.0</field>
+            </record>
+
+        <record id="feedback_2" model="hr.feedback">
+            <field name="author_id" ref="user_demo_2"/>
+            <field name="application_id" ref="app_jane"/>
+            <field name="description">Bon fit culturel, mais manque d'expérience technique.</field>
+            <field name="state">draft</field>
+        </record>
+            <record id="q1_f2" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_2"/>
+                <field name="skill_id" ref="skill_python"/>
+                <field name="label">Scripting</field>
+                <field name="answer">N'a jamais fait de script complexe.</field>
+                <field name="score">4.0</field>
+            </record>
+
+        <record id="feedback_3" model="hr.feedback">
+            <field name="author_id" ref="user_demo_3"/>
+            <field name="application_id" ref="app_bob"/>
+            <field name="description">Candidat très motivé, excellent communicant.</field>
+            <field name="state">draft</field>
+        </record>
+            <record id="q1_f3" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_3"/>
+                <field name="skill_id" ref="skill_js"/>
+                <field name="label">Frameworks Frontend</field>
+                <field name="answer">Connaît bien React et Vue.</field>
+                <field name="score">8.0</field>
+            </record>
+
+        <record id="feedback_4" model="hr.feedback">
+            <field name="author_id" ref="user_demo_1"/>
+            <field name="application_id" ref="app_jane"/>
+            <field name="description">Je confirme l'avis de Bob, un peu juste techniquement.</field>
+            <field name="state">draft</field>
+        </record>
+            <record id="q1_f4" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_4"/>
+                <field name="skill_id" ref="skill_ruby"/>
+                <field name="label">Ruby on Rails</field>
+                <field name="answer">Débutante.</field>
+                <field name="score">3.0</field>
+            </record>
+
+        <record id="feedback_5" model="hr.feedback">
+            <field name="author_id" ref="user_demo_2"/>
+            <field name="application_id" ref="app_john"/>
+            <field name="description">Excellent profil, à embaucher !</field>
+            <field name="state">draft</field>
+        </record>
+            <record id="q1_f5" model="hr.feedback.question">
+                <field name="feedback_id" ref="feedback_5"/>
+                <field name="skill_id" ref="skill_cpp"/>
+                <field name="label">Pointeurs et mémoire</field>
+                <field name="answer">Maitrise totale.</field>
+                <field name="score">10.0</field>
+            </record>
+
     </data>
 </odoo>

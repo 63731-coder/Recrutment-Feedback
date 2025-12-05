@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 class HrFeedback(models.Model):
     _name = 'hr.feedback'
     _description = 'Candidate Interview Feedback'
+    _rec_name = 'application_id' # Affiche nom au lieu de id
 
     author_id = fields.Many2one(
         'res.users',

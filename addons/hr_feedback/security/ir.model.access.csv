@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hr_feedback_hr_feedback,hr_feedback.hr_feedback,model_hr_feedback_hr_feedback,base.group_user,1,1,1,1
+access_hr_feedback,access_hr_feedback,model_hr_feedback,base.group_user,1,1,1,1
+access_hr_feedback_question,access_hr_feedback_question,model_hr_feedback_question,base.group_user,1,1,1,1
