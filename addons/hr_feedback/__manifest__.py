@@ -30,6 +30,7 @@
         'views/views.xml',
         'views/templates.xml',
         'views/hr_feedback_views.xml',
+        'views/hr_applicant_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
