@@ -6,11 +6,17 @@
         body { font-family: sans-serif; padding: 20px; }
         .feedback-card { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
         .no-data { color: #856404; background-color: #fff3cd; padding: 15px; border: 1px solid #ffeeba; border-radius: 5px; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .btn-logout { background-color: #dc3545; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <h1>Bonjour {{ user.username }} !</h1>
+    <div class="header">
+        <h1>Bonjour {{ user_email }} !</h1>
+        <a href="{% url 'logout' %}" class="btn-logout">Retour</a>
+    </div>
+
     <h2>Vos feedbacks d'entretien :</h2>
 
     <ul>
@@ -29,18 +35,11 @@
         {% empty %}
             <div class="no-data">
                 <p><strong>Aucun feedback trouvé.</strong></p>
-                <p>Nous avons cherché des candidatures liées à l'adresse : <em>{{ user.email }}</em></p>
-                <p>Si vous pensez qu'il s'agit d'une erreur, vérifiez que votre email Django correspond bien à celui fourni lors de votre candidature.</p>
+                <p>Nous avons cherché des candidatures liées à l'adresse : <em>{{ user_email }}</em></p>
+                <p>Vérifiez que c'est bien l'email utilisé lors de votre candidature.</p>
             </div>
         {% endfor %}
     </ul>
-
-    <p>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Se déconnecter</button>
-        </form>
-    </p>
 
 </body>
 </html>

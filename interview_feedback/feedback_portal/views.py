@@ -1,40 +1,63 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 import xmlrpc.client
 from odoo_config.models import OdooConfig
 
-@login_required
+# --- VUE 1 : LOGIN (Page d'accueil) ---
+def login_candidate(request):
+    # Si on envoie le formulaire (POST)
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            # On enregistre l'email en session
+            request.session['candidate_email'] = email
+            # On redirige vers la liste des feedbacks (nom de l'url : 'index')
+            return redirect('index')
+            
+    # Sinon, on affiche juste le HTML du login
+    return render(request, 'feedback_portal/login.html')
+
+# --- VUE 2 : LOGOUT ---
+def logout_candidate(request):
+    try:
+        del request.session['candidate_email']
+    except KeyError:
+        pass
+    return redirect('login_candidate')
+
+# --- VUE 3 : INDEX (Liste des feedbacks) ---
 def index(request):
-    # 1. On récupère la configuration active
+    # 1. Sécurité : On vérifie si l'email est en session
+    candidate_email = request.session.get('candidate_email')
+    if not candidate_email:
+        return redirect('login_candidate')
+
+    # 2. Config Odoo
     config = OdooConfig.objects.first()
-    
-    # Si aucune config n'existe, on évite le crash
     if not config:
-        return render(request, 'feedback_portal/error.html', {'message': "Pas de configuration Odoo trouvée."})
+        return render(request, 'feedback_portal/error.html', {'message': "Pas de configuration Odoo."})
 
     try:
-        # 2. Connexion au "bureau de sécurité" (common)
+        # 3. Connexion XML-RPC
         common = xmlrpc.client.ServerProxy(f'{config.url}/xmlrpc/2/common')
         uid = common.authenticate(config.db, config.username, config.password, {})
         
-        # 3. Connexion aux données (object)
         models = xmlrpc.client.ServerProxy(f'{config.url}/xmlrpc/2/object')
 
-        # 4. Recherche des feedbacks filtrés par l'email de l'utilisateur connecté
-        # Le filtre est : [['champ_odoo', '=', 'valeur_django']]
-        domain = [[['application_id.email_from', '=', request.user.email]]]
+        # 4. Recherche filtrée sur l'email en session
+        domain = [[['application_id.email_from', '=', candidate_email]]]
         
         feedbacks = models.execute_kw(
             config.db, uid, config.password,
-            'hr.feedback',  # Ton modèle Odoo
-            'search_read',         # Action
-            domain,                # Notre filtre sur l'email
-            {'fields': ['display_name', 'average_score', 'description', 'create_date', 'author_id']} # Les champs à lire
+            'hr.feedback',
+            'search_read',
+            domain,
+            {'fields': ['display_name', 'average_score', 'description', 'create_date', 'author_id']}
         )
 
-        # On envoie les résultats à la page HTML
-        return render(request, 'feedback_portal/index.html', {'feedbacks': feedbacks})
+        return render(request, 'feedback_portal/index.html', {
+            'feedbacks': feedbacks,
+            'user_email': candidate_email
+        })
 
     except Exception as e:
-        # En cas d'erreur technique (Odoo éteint, mauvais mot de passe...)
         return render(request, 'feedback_portal/error.html', {'message': f"Erreur Odoo : {e}"})
