@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+</head>
+<body>
+    <h2>Se connecter</h2>
+
+    {% if form.errors %}
+        <p style="color: red;">Votre nom d'utilisateur ou mot de passe est incorrect.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        
+        <p>
+            <label>Nom d'utilisateur :</label>
+            {{ form.username }}
+        </p>
+        <p>
+            <label>Mot de passe :</label>
+            {{ form.password }}
+        </p>
+
+        <input type="submit" value="Se connecter" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+</body>
+</html>

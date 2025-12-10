@@ -26,6 +26,7 @@
 
     # always loaded
     'data': [
+        'security/hr_feedback_rules.xml',
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
