@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="view_hr_feedback_tree" model="ir.ui.view">
+        <field name="name">hr.feedback.list</field>
+        <field name="model">hr.feedback</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state == 'draft'" decoration-success="state == 'done'">
+                <field name="author_id"/>
+                <field name="application_id"/>
+                <field name="interview_type"/>
+                <field name="average_score" widget="progressbar"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_feedback_form" model="ir.ui.view">
+        <field name="name">hr.feedback.form</field>
+        <field name="model">hr.feedback</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="application_id" placeholder="Candidat..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="author_id"/>
+                            <field name="interview_type" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <field name="average_score"/>
+                            <field name="questions_count"/>
+                        </group>
+                    </group>
+
+                    <field name="description" placeholder="Remarques générales sur l'entretien..."/>
+
+                    <notebook>
+                        <page string="Questions &amp; Réponses">
+                            <field name="questions_ids">
+                                <list editable="bottom">
+                                    <field name="label"/>
+                                    <field name="answer"/>
+                                    <field name="score"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_hr_feedback" model="ir.actions.act_window">
         <field name="name">Feedbacks</field>
         <field name="res_model">hr.feedback</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form</field> 
     </record>
 
     <record id="action_hr_feedback_question" model="ir.actions.act_window">
@@ -24,7 +81,7 @@
         sequence="10" />
 
     <menuitem id="menu_hr_feedback_question"
-        name="Questions"
+        name="Toutes les Questions"
         parent="menu_hr_feedback_root"
         action="action_hr_feedback_question"
         sequence="20" />

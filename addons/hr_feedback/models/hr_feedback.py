@@ -24,6 +24,14 @@ class HrFeedback(models.Model):
         ('done', 'Done')
     ], string='Status', default='draft', required=True)
 
+    # --- NOUVEAUTÉ : L'AMÉLIORATION "Questions Types" ---
+    interview_type = fields.Selection([
+        ('hr', 'Ressources Humaines'),
+        ('tech', 'Technique'),
+        ('manager', 'Management')
+    ], string="Type d'entretien", help="Sélectionnez un type pour pré-remplir les questions.")
+    # ----------------------------------------------------
+
     # Many (feedbacks) to One (application).
     application_id = fields.Many2one(
         'hr.applicant',
@@ -43,8 +51,6 @@ class HrFeedback(models.Model):
     average_score = fields.Float(
         string='Average Score',
         compute='_compute_stats', # Utilise la méthode combinée ci-dessous
-        # Odoo calcule la valeur une fois, l'écrit "en dur" dans la base de données,
-        # et ne la modifie que si les données sources changent
         store=True,
         help='Average score calculated from all associated questions.'
     )
@@ -55,6 +61,52 @@ class HrFeedback(models.Model):
         store=True,
         help='Number of questions associated with this feedback.'
     )
+
+    # LOGIQUE DE L'AMÉLIORATION (@api.onchange)
+    @api.onchange('interview_type')
+    def _onchange_interview_type(self):
+        """
+        Génère automatiquement des questions quand on change le type d'entretien.
+        """
+        if not self.interview_type:
+            return
+
+        # 1. Définir les questions selon le type
+        questions_data = []
+        if self.interview_type == 'hr':
+            questions_data = [
+                'Pourquoi voulez-vous quitter votre poste actuel ?',
+                'Quelles sont vos prétentions salariales ?',
+                'Où vous voyez-vous dans 5 ans ?'
+            ]
+        elif self.interview_type == 'tech':
+            questions_data = [
+                'Quelle est votre expérience avec Python/Django ?',
+                'Expliquez le concept de l\'ORM Odoo.',
+                'Comment gérez-vous les conflits Git ?',
+                'Avez-vous déjà utilisé Docker ?'
+            ]
+        elif self.interview_type == 'manager':
+            questions_data = [
+                'Comment gérez-vous le stress ?',
+                'Racontez une situation de conflit résolue.',
+                'Préférez-vous travailler seul ou en équipe ?'
+            ]
+
+        # 2. Préparer la commande pour mettre à jour le One2many
+        # (5, 0, 0) : Supprime toutes les lignes existantes (nettoyage)
+        lines = [(5, 0, 0)]
+        
+        for q in questions_data:
+            # (0, 0, values) : Crée une nouvelle ligne
+            lines.append((0, 0, {
+                'label': q,
+                'score': 0, # Score par défaut
+            }))
+
+        # 3. Appliquer les changements
+        self.questions_ids = lines
+    # -----------------------------------------------------
 
     # permet de recalculer un champ automatiquement quand un autre change.
     @api.depends('questions_ids', 'questions_ids.score')
@@ -75,7 +127,6 @@ class HrFeedback(models.Model):
                 record.average_score = 0.0
 
     # Il sert à bloquer l'enregistrement si une règle n'est pas respectée.
-    # AVANT insértion ou mise à jour en base de données.
     @api.constrains('state', 'questions_ids')
     def _check_questions_before_done(self):
         for record in self:
