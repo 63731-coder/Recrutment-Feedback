@@ -8,6 +8,13 @@
         .no-data { color: #856404; background-color: #fff3cd; padding: 15px; border: 1px solid #ffeeba; border-radius: 5px; }
         .header { display: flex; justify-content: space-between; align-items: center; }
         .btn-logout { background-color: #dc3545; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; }
+        
+        /* Style pour la barre de filtre */
+        .filter-bar { margin: 20px 0; padding: 15px; background-color: #f8f9fa; border-radius: 5px; border: 1px solid #e9ecef; }
+        .filter-form { display: flex; gap: 10px; align-items: center; }
+        select { padding: 5px; border-radius: 4px; border: 1px solid #ced4da; }
+        button[type="submit"] { padding: 5px 15px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        button[type="submit"]:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
@@ -15,6 +22,18 @@
     <div class="header">
         <h1>Bonjour {{ user_email }} !</h1>
         <a href="{% url 'logout' %}" class="btn-logout">Retour</a>
+    </div>
+
+    <div class="filter-bar">
+        <form method="get" action="{% url 'index' %}" class="filter-form">
+            <label for="filter"><strong>Filtrer par résultat :</strong></label>
+            <select name="filter" id="filter">
+                <option value="all" {% if current_filter == 'all' %}selected{% endif %}>Tout voir</option>
+                <option value="high" {% if current_filter == 'high' %}selected{% endif %}>Excellents (> 6/10)</option>
+                <option value="low" {% if current_filter == 'low' %}selected{% endif %}>À améliorer (≤ 6/10)</option>
+            </select>
+            <button type="submit">Appliquer</button>
+        </form>
     </div>
 
     <h2>Vos feedbacks d'entretien :</h2>

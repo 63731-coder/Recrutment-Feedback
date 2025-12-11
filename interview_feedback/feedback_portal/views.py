@@ -24,7 +24,7 @@ def logout_candidate(request):
         pass
     return redirect('login_candidate')
 
-# --- VUE 3 : INDEX (Liste des feedbacks) ---
+# --- VUE 3 : INDEX (Liste des feedbacks avec Filtre) ---
 def index(request):
     # 1. Sécurité : On vérifie si l'email est en session
     candidate_email = request.session.get('candidate_email')
@@ -43,20 +43,37 @@ def index(request):
         
         models = xmlrpc.client.ServerProxy(f'{config.url}/xmlrpc/2/object')
 
-        # 4. Recherche filtrée sur l'email en session
-        domain = [[['application_id.email_from', '=', candidate_email]]]
-        
+        # --- GESTION DU FILTRE ---
+        # On récupère le choix de l'utilisateur ('all' par défaut)
+        filter_option = request.GET.get('filter', 'all')
+
+        # On crée la liste des critères de recherche (le domaine Odoo)
+        # Critère de base : l'email du candidat
+        search_domain = [['application_id.email_from', '=', candidate_email]]
+
+        # On ajoute les critères supplémentaires selon le filtre choisi
+        if filter_option == 'high':
+            # Note > 6 sur 10
+            search_domain.append(['average_score', '>', 6])
+        elif filter_option == 'low':
+            # Note <= 6 sur 10
+            search_domain.append(['average_score', '<=', 6])
+
+        # 4. Appel XML-RPC
+        # Note : execute_kw attend une liste d'arguments. Le premier argument est notre domaine.
+        # Donc on met [search_domain]
         feedbacks = models.execute_kw(
             config.db, uid, config.password,
             'hr.feedback',
             'search_read',
-            domain,
+            [search_domain], 
             {'fields': ['display_name', 'average_score', 'description', 'create_date', 'author_id']}
         )
 
         return render(request, 'feedback_portal/index.html', {
             'feedbacks': feedbacks,
-            'user_email': candidate_email
+            'user_email': candidate_email,
+            'current_filter': filter_option # On renvoie le choix pour l'afficher dans le menu
         })
 
     except Exception as e:
