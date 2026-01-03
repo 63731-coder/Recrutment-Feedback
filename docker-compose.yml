@@ -26,7 +26,8 @@ services:
       - HOST=db
       - USER=odoo
       - PASSWORD=odoo
-    command: --dev=all
+    # Installation auto du module et création de la DB
+    command: --dev=all -i hr_feedback -d demo_db
 
 volumes:
   db-data:
