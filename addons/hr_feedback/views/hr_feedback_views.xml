@@ -9,7 +9,7 @@
                 <field name="author_id"/>
                 <field name="application_id"/>
                 <field name="interview_type"/>
-                <field name="average_score" widget="progressbar"/>
+                <field name="average_score"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'done'"/>
             </list>
         </field>

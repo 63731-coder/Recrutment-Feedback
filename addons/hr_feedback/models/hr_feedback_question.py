@@ -4,6 +4,7 @@ from odoo import models, fields
 class HrFeedbackQuestion(models.Model):
     _name = 'hr.feedback.question'
     _description = 'Question du Feedback'
+    # pas de champ 'name', utilise le contenu du champ 'label' pour afficher le nom
     _rec_name = 'label'
 
     # Texte de la question
@@ -15,7 +16,7 @@ class HrFeedbackQuestion(models.Model):
     # Note attribuée (Float pour permettre des demi-points)
     score = fields.Float(string='Score /10', default=0.0)
 
-    # Lien inverse vers le Feedback (Many2one est obligatoire pour un One2many)
+    # Lien inverse vers le Feedback
     feedback_id = fields.Many2one(
         'hr.feedback', 
         string='Feedback associé', 

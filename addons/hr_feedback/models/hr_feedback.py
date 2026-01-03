@@ -10,7 +10,7 @@ class HrFeedback(models.Model):
         'res.users',
         string='Author',
         required=True,
-        default=lambda self: self.env.user,
+        default=lambda self: self.env.user, #champ par défaut = utilisateur connecté
         help='The user who created the feedback.'
     )
 
@@ -24,7 +24,7 @@ class HrFeedback(models.Model):
         ('done', 'Done')
     ], string='Status', default='draft', required=True)
 
-    # --- NOUVEAUTÉ : L'AMÉLIORATION "Questions Types" ---
+    # ---  L'AMÉLIORATION "Questions Types" ---
     interview_type = fields.Selection([
         ('hr', 'Ressources Humaines'),
         ('tech', 'Technique'),
@@ -122,6 +122,7 @@ class HrFeedback(models.Model):
             # 2. Calcul de la moyenne
             if record.questions_count > 0:
                 total_score = sum(q.score for q in record.questions_ids)
+                # Mets ce chiffre dans la case 'average_score'
                 record.average_score = total_score / record.questions_count
             else:
                 record.average_score = 0.0

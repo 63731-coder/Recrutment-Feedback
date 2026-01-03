@@ -3,11 +3,9 @@
         <record id="hr_feedback_admin_bypass_rule" model="ir.rule">
             <field name="name">Feedback: Admin - Voir Tout</field>
             <field name="model_id" ref="model_hr_feedback"/>
-            
             <field name="groups" eval="[(4, ref('base.group_system'))]"/>
-            
-            <!-- <field name="domain_force">[(1, '=', 1)]</field> -->
-            
+            <!-- utilisateur odoo peut voir que ses propres feedbacks, pas tout
+            <field name="domain_force">[(1, '=', 1)]</field> -->
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
