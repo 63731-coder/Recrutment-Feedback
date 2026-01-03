@@ -17,9 +17,9 @@ Pour tester le projet, veuillez suivre ces deux étapes dans l'ordre :
 Le backend Odoo et la base de données PostgreSQL sont conteneurisés.
 À la racine du projet (où se trouve le fichier docker-compose.yml), exécutez :
 
-´´´bash
+```bash
 docker-compose up
-
+```
 
 Attendez quelques instants que le serveur Odoo soit totalement opérationnel (accès via le port 8069).
 
@@ -27,9 +27,9 @@ Attendez quelques instants que le serveur Odoo soit totalement opérationnel (ac
 
 Ouvrez un nouveau terminal à la racine du projet (au même niveau que le fichier manage.py) et exécutez la commande suivante :
 
-´´´bash
+```bash
 python manage.py runserver
-
+```
 
 (ou py manage.py runserver selon votre configuration Windows)
 
