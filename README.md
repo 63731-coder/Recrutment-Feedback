@@ -1,6 +1,6 @@
-Projet Développement Web IV : Gestion des Feedbacks de Recrutement
+# Projet Développement Web IV : Gestion des Feedbacks de Recrutement
 
-Ce projet a pour but de lier un ERP (Odoo) à un portail web externe (Django) afin de gérer les retours d'entretiens d'embauche.
+## Ce projet a pour but de lier un ERP (Odoo) à un portail web externe (Django) afin de gérer les retours d'entretiens d'embauche.
 
 Auteurs :
 
@@ -8,7 +8,7 @@ Noje Alessian
 
 Opre Nicoleta
 
-🚀 Instructions de Lancement
+# 🚀 Instructions de Lancement
 
 Pour tester le projet, veuillez suivre ces deux étapes dans l'ordre :
 
@@ -17,6 +17,7 @@ Pour tester le projet, veuillez suivre ces deux étapes dans l'ordre :
 Le backend Odoo et la base de données PostgreSQL sont conteneurisés.
 À la racine du projet (où se trouve le fichier docker-compose.yml), exécutez :
 
+´´´bash
 docker-compose up
 
 
@@ -26,6 +27,7 @@ Attendez quelques instants que le serveur Odoo soit totalement opérationnel (ac
 
 Ouvrez un nouveau terminal à la racine du projet (au même niveau que le fichier manage.py) et exécutez la commande suivante :
 
+´´´bash
 python manage.py runserver
 
 
@@ -57,6 +59,6 @@ Login : admin
 
 Password : admin
 
-📝 Note Technique
+# 📝 Note Technique
 
 La base de données SQLite (db.sqlite3) a été laissée intentionnellement dans le dépôt git pour fournir des données de démonstration prêtes à l'emploi et faciliter la correction sans nécessiter de configuration initiale complexe.
