@@ -54,7 +54,7 @@ Une fois les serveurs lancés, vous pouvez accéder aux interfaces suivantes :
 ## 🔹 Odoo – Interface Recruteur
 
 * **URL** : [http://localhost:8069](http://localhost:8069)
-* **Email** : `admin`
+* **Email** : `63731@etu.he2b.be`
 * **Mot de passe** : `admin`
 
 Le module **"Feedback"** est déjà installé et les données de démonstration sont chargées.
