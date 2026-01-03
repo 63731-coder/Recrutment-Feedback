@@ -13,9 +13,15 @@ Ce projet a pour but de lier un ERP (**Odoo**) à un portail web externe (**Djan
 
 # Instructions de Lancement
 
-Pour tester le projet, veuillez suivre ces deux étapes **dans l'ordre** :
+Pour tester le projet, veuillez suivre ces trois étapes **dans l'ordre** :
 
-## 1. Lancer le serveur Odoo (Docker)
+
+## 1. installez les librairies requises 
+
+```bash
+pip install -r requirements.txt
+```
+## 2. Lancer le serveur Odoo (Docker)
 
 Le backend **Odoo** et la base de données **PostgreSQL** sont conteneurisés.
 
@@ -29,7 +35,7 @@ Attendez quelques instants que le serveur Odoo soit totalement opérationnel (ac
 
 ---
 
-## 2. Lancer l'application Django
+## 3. Lancer l'application Django
 
 Ouvrez un nouveau terminal à la racine du projet (au même niveau que le fichier `manage.py`) et exécutez la commande suivante :
 
