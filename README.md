@@ -11,7 +11,7 @@ Ce projet a pour but de lier un ERP (**Odoo**) à un portail web externe (**Djan
 
 ---
 
-# 🚀 Instructions de Lancement
+# Instructions de Lancement
 
 Pour tester le projet, veuillez suivre ces deux étapes **dans l'ordre** :
 
@@ -41,7 +41,7 @@ python manage.py runserver
 
 ---
 
-# 🔗 Accès et Identifiants (Demo Data)
+# Accès et Identifiants (Demo Data)
 
 Une fois les serveurs lancés, vous pouvez accéder aux interfaces suivantes :
 
@@ -67,6 +67,6 @@ Le module **"Feedback"** est déjà installé et les données de démonstration 
 
 ---
 
-# 📝 Note Technique
+# Note Technique
 
 La base de données **SQLite** (`db.sqlite3`) a été laissée intentionnellement dans le dépôt Git afin de fournir des données de démonstration prêtes à l'emploi et de faciliter la correction sans nécessiter de configuration initiale complexe.
