@@ -13,7 +13,7 @@ Ce projet a pour but de lier un ERP (**Odoo**) à un portail web externe (**Djan
 
 # Instructions de Lancement
 
-Pour tester le projet, veuillez suivre ces trois étapes **dans l'ordre** :
+Pour tester le projet, veuillez suivre ces 4 étapes **dans l'ordre** :
 
 
 ## 1. installez les librairies requises 
@@ -47,6 +47,16 @@ python manage.py runserver
 
 ---
 
+## 4. Configurer la connexion Odoo 
+
+Une fois Django lancé, il faut lui indiquer où trouver Odoo pour que la communication fonctionne :
+
+1. Accédez à cette URL spécifique : http://127.0.0.1:8000/admin/odoo_config/odooconfig/
+2. Connectez-vous avec le superuser Django (voir identifiants plus bas).
+3. Ajoutez une nouvelle configuration (bouton "Ajouter odoo config") en entrant les paramètres Odoo ci-dessous (URL, DB, User, Password).
+
+---
+
 # Accès et Identifiants (Demo Data)
 
 Une fois les serveurs lancés, vous pouvez accéder aux interfaces suivantes :
@@ -55,8 +65,8 @@ Une fois les serveurs lancés, vous pouvez accéder aux interfaces suivantes :
 
 * **URL** : [http://localhost:8069](http://localhost:8069)
 * **Email** : `admin`
-* **Mot de passe** : `admin`
-
+* **Mot de passe** : `admin`    
+* **Nom DB** : `demo_db`    
 Le module **"Feedback"** est déjà installé et les données de démonstration sont chargées.
 
 ---
