@@ -1,80 +1,80 @@
-# Projet Développement Web IV : Gestion des Feedbacks de Recrutement
+# Web Development Project IV: Recruitment Feedback Management
 
-## Objectif du projet
+## Project Objective
 
-Ce projet a pour but de lier un ERP (**Odoo**) à un portail web externe (**Django**) afin de gérer les retours d'entretiens d'embauche.
+The purpose of this project is to connect an ERP (**Odoo**) to an external web portal (**Django**) in order to manage recruitment interview feedback.
 
-## Auteurs
+## Authors
 
 * Noje Alessian
 * Opre Nicoleta
 
 ---
 
-# Instructions de Lancement
+# Startup Instructions
 
-Pour tester le projet, veuillez suivre ces 4 étapes **dans l'ordre** :
+To test the project, please follow these 4 steps **in order**:
 
-
-## 1. installez les librairies requises 
+## 1. Install the required libraries
 
 ```bash
 pip install -r requirements.txt
 ```
-## 2. Lancer le serveur Odoo (Docker)
 
-Le backend **Odoo** et la base de données **PostgreSQL** sont conteneurisés.
+## 2. Start the Odoo server (Docker)
 
-À la racine du projet (où se trouve le fichier `docker-compose.yml`), exécutez :
+The **Odoo** backend and the **PostgreSQL** database are containerized.
+
+From the root of the project (where the `docker-compose.yml` file is located), run:
 
 ```bash
 docker-compose up
 ```
 
-Attendez quelques instants que le serveur Odoo soit totalement opérationnel (accessible via le port **8069**).
+Wait a few moments until the Odoo server is fully operational (accessible via port **8069**).
 
 ---
 
-## 3. Lancer l'application Django
+## 3. Start the Django application
 
-Ouvrez un nouveau terminal à la racine du projet (au même niveau que le fichier `manage.py`) et exécutez la commande suivante :
+Open a new terminal at the root of the project (at the same level as the `manage.py` file) and run the following command:
 
 ```bash
 python manage.py runserver
 ```
 
-*(ou `py manage.py runserver` selon votre configuration Windows)*
+*(or `py manage.py runserver` depending on your Windows configuration)*
 
 ---
 
-## 4. Configurer la connexion Odoo 
+## 4. Configure the Odoo connection
 
-Une fois Django lancé, il faut lui indiquer où trouver Odoo pour que la communication fonctionne :
+Once Django is running, you need to tell it where to find Odoo so that communication works properly:
 
-1. Accédez à cette URL spécifique : http://127.0.0.1:8000/admin/odoo_config/odooconfig/
-2. Connectez-vous avec le superuser Django (voir identifiants plus bas).
-3. Ajoutez une nouvelle configuration (bouton "Ajouter odoo config") en entrant les paramètres Odoo ci-dessous (URL, DB, User, Password).
+1. Go to this specific URL: [http://127.0.0.1:8000/admin/odoo_config/odooconfig/](http://127.0.0.1:8000/admin/odoo_config/odooconfig/)
+2. Log in with the Django superuser (see credentials below).
+3. Add a new configuration ("Add odoo config" button) by entering the Odoo parameters below (URL, DB, User, Password).
 
 ---
 
-# Accès et Identifiants (Demo Data)
+# Access and Credentials (Demo Data)
 
-Une fois les serveurs lancés, vous pouvez accéder aux interfaces suivantes :
+Once the servers are running, you can access the following interfaces:
 
-## 🔹 Odoo – Interface Recruteur
+## 🔹 Odoo – Recruiter Interface
 
 * **URL** : [http://localhost:8069](http://localhost:8069)
 * **Email** : `admin`
-* **Mot de passe** : `admin`    
-* **Nom DB** : `demo_db`    
-Le module **"Feedback"** est déjà installé et les données de démonstration sont chargées.
+* **Password** : `admin`
+* **DB Name** : `demo_db`
+  The **"Feedback"** module is already installed and demo data is loaded.
 
 ---
 
-## 🔹 Django – Interface Candidat
+## 🔹 Django – Candidate Interface
 
-* **URL Portail** : [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-* **URL Admin** : [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+* **Portal URL** : [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+* **Admin URL** : [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 ### Superuser
 
@@ -83,6 +83,6 @@ Le module **"Feedback"** est déjà installé et les données de démonstration 
 
 ---
 
-# Note Technique
+# Technical Note
 
-La base de données **SQLite** (`db.sqlite3`) a été laissée intentionnellement dans le dépôt Git afin de fournir des données de démonstration prêtes à l'emploi et de faciliter la correction sans nécessiter de configuration initiale complexe.
+The **SQLite** database (`db.sqlite3`) has been intentionally left in the Git repository in order to provide ready-to-use demo data and to facilitate grading without requiring complex initial configuration.
